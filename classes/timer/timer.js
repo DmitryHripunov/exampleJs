@@ -4,7 +4,7 @@ export default class TimerDisplay {
       throw TypeError('количество секунд должно быть больше 1');
     }
     this.startTime = seconds;
-    this.currenTime = seconds;
+    this.currentTime = seconds;
   }
 
   start() {
@@ -17,31 +17,31 @@ export default class TimerDisplay {
 
   reset() {
     this.pause();
-    this.currenTime = this.startTime
+    this.currentTime = this.startTime
   }
 
   tick() {
-    if (this.currenTime <= 1) {
-      this.currenTime = 0;
+    if (this.currentTime <= 1) {
+      this.currentTime = 0;
       this.pause();
       return;
     }
-    --this.currenTime
+    --this.currentTime
   }
 
-  set currenTime(time) {
+  set currentTime(time) {
     this._currentTime = time;
     if (this.displayElement) {
       this.displayElement.textContent = time
     }
   }
 
-  get currenTime() {
+  get currentTime() {
     return this._currentTime;
   }
 
   get elapseTime() {
-    return this.startTime - this.currenTime;
+    return this.startTime - this.currentTime;
   }
 
   getComponentElement() {
@@ -65,7 +65,7 @@ export default class TimerDisplay {
 
     this.rootElement = root;
     this.displayElement = currentTimerDisplay;
-    this.displayElement.textContent = this.currenTime;
+    this.displayElement.textContent = this.currentTime;
     return root;
   }
 }
