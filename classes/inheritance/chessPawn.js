@@ -23,7 +23,23 @@ class ChessFigure {
   get position() {
     return [this._x, this._y]; 
   }
+
+  move() {};
 }
 
 class Pawn extends ChessFigure {
+  constructor(x, color) {
+    const pos = [x, color === 'white' ? 1 : 6];
+    super(pos, color);
+  }
+
+  move() {
+    const move = this.color === 'white' ? 1 : -1;
+    this.position = [this.position[0], this.position[1] + move];
+    super.move()
+  }
 }
+
+const pownWhite = new Pawn(1, 'white');
+const pownBlack = new Pawn(1, 'black');
+
