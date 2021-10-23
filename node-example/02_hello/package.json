@@ -1,0 +1,19 @@
+{
+  "name": "02_hello",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ms": "^2.1.3",
+    "nanoid": "^3.1.30",
+    "nodemon": "^2.0.14"
+  }
+}
