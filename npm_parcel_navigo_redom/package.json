@@ -1,0 +1,15 @@
+{
+  "name": "npm",
+  "description": "Product catalog",
+  "scripts": {
+    "dev": "npx parcel index.html",  
+    "build": "npx parcel build index.html"  
+  },
+  "author": "Dmitri",
+  "private": true,
+  "dependencies": {
+    "navigo": "^8.11.1",
+    "parcel": "^2.0.1",
+    "redom": "^3.27.1"
+  }
+}
