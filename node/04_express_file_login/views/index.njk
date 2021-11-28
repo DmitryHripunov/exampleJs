@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>({{ count }})</title>
+
+  {{ uiKitCss | safe }}
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+</head>
+
+<body>
+  <section class="uk-container">
+    <h1>The count is {{ count }}</h1>
+
+    {% if count > 5  %}
+      <h2>WOAH!</h2>
+    {% endif %}
+    <br>
+    <button class="uk-button" id="button">wall Bottles of Beer</button>
+
+    <div class="uk-margin-top">
+      {% if count > 0 %}
+        <ul>
+          {% for ctn in counts %}
+            <li>
+              {{ ctn }} bottles of beer on the wall
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div class="uk-margin-top">
+      <form action="/upload" enctype="multipart/form-data" method="POST">
+        <input class="uk-input" type="file" name="image">
+        <button type="submit" class="uk-button uk-button-default">Upload</button>
+      </form>
+    </div>
+
+    <div class="uk-margin-top">
+      {% for file in files %}
+        <img class="uk-border-rounded img" src="/uploads/{{file}}">
+      {% endfor %}
+    </div>
+
+    <div class="uk-margin-top">
+      {% if user %}
+        <strong>User: {{ user.username }}.
+          <a href="/logout">log out</a>
+        </strong>
+
+        <h3>My books count: {{user.books}}</h3>
+
+        <p>
+          <button id="add-book" type="botton">i've read another one!</button>
+        </p>
+      {% else %}
+        <h2>Log in</h2>
+        <form method="POST" action="/login" enctype="application/x-www-form-urlencoded">
+            <p> 
+              <input type="text" name="username" class="uk-input">
+            </p>
+            <p> 
+              <input type="password" name="password" class="uk-input">
+            </p>
+              {% if authError %}
+                <div class="uk-alert uk-alert-danger">
+                  <p>Wrong username or password</p>
+                </div>
+              {% endif %}
+            <button class="uk-button uk-button-primary">Login</button>
+        </form>
+      {% endif %}
+    <div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p>This page is using UIKit: <code>{{ uiKitCss }}</code></p>
+  </section>
+
+
+  <script>
+    document.getElementById('button').addEventListener('click', () => {
+      fetch('/count', { method: 'post' }).then(() => location.reload())
+    });
+  </script>
+
+  {% if user %}
+    <script>
+      document.getElementById('add-book').addEventListener('click', () => {
+        fetch('/api/add-book', { method: 'post' }).then(() => location.reload())
+      });
+    </script>
+  {% endif %}
+</body>
+
+</html>
