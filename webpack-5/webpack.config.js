@@ -9,7 +9,7 @@ const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = (env) => ({
   entry: {
-    common: ['./src/index.js'],
+    main: path.resolve('./src/index.js'),
   },
   output: {
     path: path.resolve(__dirname, './public'),
@@ -21,18 +21,19 @@ module.exports = (env) => ({
     rules: [
       { // babel-loader
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
+            compact: true,
           },
         },
       },
       { // css-loader
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          env.dev ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
         ],
@@ -40,7 +41,7 @@ module.exports = (env) => ({
       { // less-loader
         test: /\.less$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          env.dev ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
           {
             loader: 'postcss-loader',
@@ -59,31 +60,34 @@ module.exports = (env) => ({
       },
       { // html-loader
         test: /\.(html)$/,
-        use: {
-          loader: 'html-loader',
-          options: {
-            // interpolate: true,
-            minimize: env.dev ? false
-              : {
-                removeComments: true,
-                collapseWhitespace: true,
-              },
+        include: /common.blocks/,
+        use: [
+          'html-loader',
+          'extract-loader',
+          {
+            options: {
+              minimize: env.dev ? false
+                : {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                },
+            },
           },
-        },
+        ],
       },
       { // img
         test: /\.(png|jpe?g|webp|gif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'img/[name].[ext]',
+          filename: 'img/[name][ext]',
         },
       },
       { // fonts
         test: /\.(eot|ttf|woff|woff2)$/,
-        type: 'asset/resource',
-        generator: {
-          filename: 'fonts/[name].[ext]',
-        },
+        type: 'asset/inline',
+        // generator: {
+        //   filename: 'fonts/[name].[ext]',
+        // },
       },
       { // svg static
         test: /\.(svg)$/,
@@ -136,7 +140,9 @@ module.exports = (env) => ({
   devServer: {
     hot: true,
     historyApiFallback: true,
-    watchFiles: ['src/**/*.html', 'public/**/*'],
+    open: true,
+    compress: true,
+    watchFiles: ['src/*.html', 'src/**/*'],
   },
   optimization: {
     minimizer: [
@@ -161,8 +167,19 @@ module.exports = (env) => ({
       },
     }),
 
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.join(__dirname, 'src/static'),
+    //       to: 'static',
+    //       globOptions: {
+    //         ignore: ['*.md'],
+    //       },
+    //     },
+    //   ],
+    // }),
     new HtmlWebpackPlugin({
-      title: 'My App',
+      title: 'test title',
       template: 'src/index.html',
       filename: 'index.html',
     }),
