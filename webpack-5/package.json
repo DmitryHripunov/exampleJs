@@ -6,12 +6,14 @@
     "lint": "eslint ./",
     "lint:report": "eslint ./",
     "dev": "webpack serve --mode=development --env dev",
-    "build": "webpack --mode=production --env prod"
+    "build": "webpack --mode=production --env prod",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "@squoosh/lib": "^0.4.0",
+    "@types/jest": "^27.0.3",
     "autoprefixer": "^10.4.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.4.4",
@@ -74,7 +76,9 @@
     "url": ""
   },
   "dependencies": {
+    "D": "^1.0.0",
     "babel-polyfill": "^6.26.0",
+    "jest": "^27.4.5",
     "normalize.css": "^8.0.1"
   },
   "browserslist": [

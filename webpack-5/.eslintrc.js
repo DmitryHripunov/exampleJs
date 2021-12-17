@@ -1,15 +1,33 @@
 module.exports = {
   root: true,
-  extends: ['airbnb-base'],
+  extends: [
+    'airbnb-base',
+    // 'eslint/recommended',
+    // 'plugin:jest/recommended',
+    // 'plugin:node/recommended',
+  ],
   env: {
     browser: true,
+    'jest/globals': true,
+    es6: true,
   },
+  plugins: ['prettier', 'jest'],
   rules: {
-    'no-alert': 0,
+    'no-alert': 'off',
     'no-param-reassign': [2, { props: false }],
-    'no-plusplus': 0,
-    'no-iterator': 0,
+    'no-plusplus': 'off',
+    'no-iterator': 'off',
     'no-restricted-syntax': [2, 'WithStatement'],
     'func-style': 0,
+    'import/extensions': ['error', 'always', {
+      js: 'never',
+    }],
+    'import/no-extraneous-dependencies': ['error', {
+      optionalDependencies: ['test/unit/index.js'],
+    }],
+    'no-undef': 0,
+    'linebreak-style': 0,
+    radix: 0,
+    'no-restricted-globals': 0,
   },
 };
