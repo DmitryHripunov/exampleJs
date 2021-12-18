@@ -1,5 +1,6 @@
 # site
-> базовая настройка webpack.
+
+> Верстка сайта.
 
 ## Установка и запуск
 
@@ -28,6 +29,9 @@ new HtmlWebpackPlugin({
       filename: 'new-page.html',
     }),
 ```
+
+После этого файл `src/new-page.html` будет прогонятся через `webpack` c извлечением всех ресурсов, добавлением в html `common.css`, `common.js`.
+
 В сборщик подключен Postcss с плагинами [autoprifixer](https://github.com/postcss/autoprefixer) и [postcss-inline-svg](https://github.com/TrySound/postcss-inline-svg)
 
 Javascript код проходит строгую проверку eslint перед обработкой. Для отключения линтера нужно добавить комментарий
